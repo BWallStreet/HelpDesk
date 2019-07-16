@@ -10,13 +10,16 @@ class FormContainer extends Component {
         super(props);
 
         this.state = {
-            data:[]
-
+            enteredId:'',
+            enteredPin:'',
         }
 
         this.handleInput = this.handleInput.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleClearForm = this.handleClearForm.bind(this);
+        this.onChangeId = this.onChangeId.bind(this);
+        this.onChangePin = this.onChangePin.bind(this);
+        this.showValue = this.showValue.bind(this);
 
     }
 
@@ -26,14 +29,22 @@ class FormContainer extends Component {
 
     }
 
-    componentDidMount() {
 
-        fetch('http://demo6287274.mockable.io/')
-            .then(response => response.json())
-            .then(json => this.setState({
-                data: json
-                }
-            ));
+
+    onChangeId(event) {
+        this.setState({
+            enteredId: event.target.value
+        })
+    }
+
+    onChangePin(event) {
+        this.setState({
+            enteredPin: event.target.value
+        })
+    }
+
+    showValue() {
+        alert(this.state.enteredId + ' ' + this.state.enteredPin);
     }
 
 
@@ -42,49 +53,37 @@ class FormContainer extends Component {
     }
 
 
-    handleInput(e) {
+    handleInput() {
+
+
     }
+
+
 
     render() {
 
-        var {data} = this.state;
 
         return (
             <form className="FormContainer" >
-                <div>
-                    <ul >
-                        {JSON.stringify(data)}
-                    </ul>
-                </div>
 
-                <Input type={'text'}
-                       title= {'Employee ID'}
-                       name= {'name'}
-                       value={'name'}
-                       placeholder = {'Enter 8 Digit ID'}
-                       handleChange = {this.handleInput}
-                />
+                <label>
+                    Employee ID:
+                <input
+                    placeholder='Enter Employee ID' onChange={this.onChangeId.bind(this)}/>
+                </label>
 
-                <Input type={'text'}
-                       title= {'pin'}
-                       name= {'pin'}
-                       value={'pin'}
-                       placeholder = {'Enter pin'}
-                       handleChange = {this.handleInput}
-                />
-
-                <Button
-                    action= {this.handleFormSubmit}
-                    type={'primary'}
-                    title={'Submit'}
-                    style={buttonStyle}
-                    />
+                <label>
+                    Employee Pin:
+                    <input
+                        placeholder='Enter 8 digit PIN' onChange={this.onChangePin.bind(this)}/>
+                </label>
+                <input type="submit" value="Submit" onClick={this.showValue.bind(this)}/>
 
 
             </form>
 
 
-        )
+        );
     }
 
 
